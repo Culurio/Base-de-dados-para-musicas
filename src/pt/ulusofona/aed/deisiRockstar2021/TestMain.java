@@ -9,17 +9,15 @@ import static org.junit.Assert.*;
 
 public class TestMain {
     @Test
-    public void testgetParseInfo() {
-        assertEquals("OK: 7, Ignored: 1","OK: 7, Ignored: 1", Main.getParseInfo("songs.txt").toString());
+    public void testSong1() {
+        Song musica = new Song("0tStWvUMHODuLN4TIaSGab ","Loops & Tings - Radio Edit",2013);
+        assertEquals("0tStWvUMHODuLN4TIaSGab | Loops & Tings - Radio Edit | 2013",
+                "0tStWvUMHODuLN4TIaSGab  | Loops & Tings - Radio Edit | 2013", musica.toString());
     }
     @Test
-    public void testgetParseInfo2() {
-        assertEquals("OK: 7, Ignored: 1","OK: 4, Ignored: 0", "OK: 4, Ignored: 0");
-    }
-    @Test
-    public void testSong(){
-        if(Main.getSongs().size()!=0){
-            assertEquals("17ZnveSDBpG9QtL7zLJNPy | Only For You | 2012","17ZnveSDBpG9QtL7zLJNPy | Only For You | 2012", Main.getSongs().get(0).toString());
-        }
+    public void testSong2(){
+        Song musica = new Song("17ZnveSDBpG9QtL7zLJNPy","Only For You",2012);
+        assertEquals("17ZnveSDBpG9QtL7zLJNPy | Only For You | 2012",
+                "17ZnveSDBpG9QtL7zLJNPy | Only For You | 2012", musica.toString());
     }
 }

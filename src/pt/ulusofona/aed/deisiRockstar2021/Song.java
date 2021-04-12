@@ -1,5 +1,7 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
+import java.util.ArrayList;
+
 public class Song {
     String id;
     String nome;
@@ -14,6 +16,7 @@ public class Song {
         this.nome=nome;
         this.anoLancamento=anoLancamento;
     }
+
     public String toString() {
         return id + " | " + nome + " | " + anoLancamento;
     }
