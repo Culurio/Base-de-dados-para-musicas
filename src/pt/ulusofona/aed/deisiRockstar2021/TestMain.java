@@ -20,4 +20,9 @@ public class TestMain {
         assertEquals("17ZnveSDBpG9QtL7zLJNPy | Only For You | 2012",
                 "17ZnveSDBpG9QtL7zLJNPy | Only For You | 2012", musica.toString());
     }
+    @Test
+    public void testParseInfo(){
+        ParseInfo verification = new ParseInfo(7,1);
+        assertEquals("OK: 7, Ignored: 1",verification.toString());
+    }
 }
