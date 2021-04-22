@@ -73,11 +73,11 @@ public class Main {
             if ((dados.length == 7)) {
                 String ID = dados[0].trim();
                 int duração = Integer.parseInt(dados[1].trim());
-                int letraExplicita = Integer.parseInt(dados[1].trim());
-                int popularidade = Integer.parseInt(dados[1].trim());
-                double dancabilidade = Double.parseDouble(dados[1].trim());
-                double vivacidade = Double.parseDouble(dados[1].trim());
-                double volumeMedio = Double.parseDouble(dados[1].trim());
+                int letraExplicita = Integer.parseInt(dados[2].trim());
+                int popularidade = Integer.parseInt(dados[3].trim());
+                double dancabilidade = Double.parseDouble(dados[4].trim());
+                double vivacidade = Double.parseDouble(dados[5].trim());
+                double volumeMedio = Double.parseDouble(dados[6].trim());
                 SongDetails detalhe = new SongDetails(ID, duração, letraExplicita, popularidade, dancabilidade, vivacidade, volumeMedio); // criar o obj Utilizador
                 detalhes.add(detalhe); //guardar o objecto
                 infoDetails.ok++;
@@ -118,9 +118,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(getSongs());
-        System.out.println(getParseInfo("song_details.txt"));
-        System.out.println(getParseInfo("songs.txt"));
-        System.out.println(getParseInfo("song_artists.txt"));
+        System.out.println(detalhes.get(0).letraExplicita);
+
     }
 }
