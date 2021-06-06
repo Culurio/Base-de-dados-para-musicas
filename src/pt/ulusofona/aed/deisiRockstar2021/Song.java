@@ -1,6 +1,5 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
-import java.util.concurrent.TimeUnit;
 
 public class Song {
     String id;

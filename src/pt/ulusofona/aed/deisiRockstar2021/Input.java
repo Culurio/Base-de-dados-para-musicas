@@ -16,15 +16,11 @@ public class Input {
 
     public static String execute(String command) {
         String[] commands = command.split(" ");
-        switch (commands[0]) {
-            case "COUNT_SONGS_YEAR":
-                return commandsFunctions.CountSongYears(commands[1]);
-            case "GET_ARTISTS_FOR_TAG":
-                return commandsFunctions.GetArtistsForTag(commands[0]);
-            case "GET_MOST_DANCEABLE":
-                return commandsFunctions.GetMostDanceable(commands[1], commands[2], commands[3]);
-            default:
-                return "Illegal command. Try again";
-        }
+        return switch (commands[0]) {
+            case "COUNT_SONGS_YEAR" -> commandsFunctions.CountSongYears(commands[1]);
+            case "GET_ARTISTS_FOR_TAG" -> commandsFunctions.GetArtistsForTag(commands[0]);
+            case "GET_MOST_DANCEABLE" -> commandsFunctions.GetMostDanceable(commands[1], commands[2], commands[3]);
+            default -> "Illegal command. Try again";
+        };
     }
 }
