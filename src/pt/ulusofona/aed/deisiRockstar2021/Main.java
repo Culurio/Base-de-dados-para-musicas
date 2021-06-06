@@ -6,11 +6,11 @@ import java.io.IOException;
 public class Main {
 
     public static void loadFiles() throws IOException {
-            SongsFunctions.lerSongs("songs.txt");
-            ArtistsFunctions.lerArtists("song_artists.txt");
-            DetailsFunctions.lerDetails("song_details.txt");
-            SongsFunctions.joinInfo();
-            SongsFunctions.songs=SongsFunctions.sortDetails(SongsFunctions.songs);
+        SongsFunctions.lerSongs("songs.txt");
+        ArtistsFunctions.lerArtists("song_artists.txt");
+        DetailsFunctions.lerDetails("song_details.txt");
+        SongsFunctions.joinInfo();
+        SongsFunctions.songs = SongsFunctions.sortDetails(SongsFunctions.songs);
     }
 
 

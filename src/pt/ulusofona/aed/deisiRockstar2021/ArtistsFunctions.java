@@ -14,8 +14,8 @@ public class ArtistsFunctions {
     public static void lerArtists(String filename) throws IOException {
         FileReader songArtists = new FileReader(filename);
         BufferedReader reader = new BufferedReader(songArtists);
-        infoArtist.ok=0;
-        infoArtist.ignored=0;
+        infoArtist.ok = 0;
+        infoArtist.ignored = 0;
         artistas.clear();
         String linha;
 
@@ -27,22 +27,22 @@ public class ArtistsFunctions {
                 Artista artista = new Artista(ID, Nome); // criar o obj Utilizador
                 infoArtist.ok++;
                 idCheck.add(ID);
-                artistas.put(ID,artista); //guardar o objecto
-                }else {
+                artistas.put(ID, artista); //guardar o objecto
+            } else {
                 infoArtist.ignored++;
             }
         }
         reader.close();
     }
 
-    public static String filterName(String artist){
-        return artist.substring(2,artist.length()-2);
+    public static String filterName(String artist) {
+        return artist.substring(2, artist.length() - 2);
     }
 
-    public static boolean validLine(String[]dados){
-        if((dados.length == 2) && SongsFunctions.idCheck.contains(dados[0].trim()) && !idCheck.contains(dados[0].trim()) ){
+    public static boolean validLine(String[] dados) {
+        if ((dados.length == 2) && SongsFunctions.idCheck.contains(dados[0].trim()) && !idCheck.contains(dados[0].trim())) {
             String Nome = filterName(dados[1].trim());
-            String [] Nomes= Nome.split(",");
+            String[] Nomes = Nome.split(",");
             for (String nome : Nomes) {
                 if (nome.length() < 2) {
                     return false;

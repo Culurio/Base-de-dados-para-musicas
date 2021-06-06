@@ -5,11 +5,11 @@ public class Artista {
     String nome;
     int nrTemas;
 
-    Artista(){
+    Artista() {
     }
 
-    Artista(String id,String nome){
-        this.id=id;
-        this.nome=nome;
+    Artista(String id, String nome) {
+        this.id = id;
+        this.nome = nome;
     }
 }

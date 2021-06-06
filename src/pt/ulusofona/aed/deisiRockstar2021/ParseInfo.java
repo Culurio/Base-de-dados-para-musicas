@@ -4,11 +4,12 @@ public class ParseInfo {
     int ok;
     int ignored;
 
-    ParseInfo(int ok, int ignored){
-        this.ok=ok;
-        this.ignored=ignored;
+    ParseInfo(int ok, int ignored) {
+        this.ok = ok;
+        this.ignored = ignored;
     }
+
     public String toString() {
-        return "OK: "+ ok +", Ignored: " + ignored;
+        return "OK: " + ok + ", Ignored: " + ignored;
     }
 }

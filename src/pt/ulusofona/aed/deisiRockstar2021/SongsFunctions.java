@@ -14,8 +14,8 @@ public class SongsFunctions {
 
     public static void lerSongs(String filename) throws IOException {
         songs.clear();
-        infoSong.ok=0;
-        infoSong.ignored=0;
+        infoSong.ok = 0;
+        infoSong.ignored = 0;
         FileReader songsFile = new FileReader(filename);
         BufferedReader reader = new BufferedReader(songsFile);
         String linha;
@@ -27,7 +27,7 @@ public class SongsFunctions {
                 String ano = dados[2].trim();
                 int anoLancamento = Integer.parseInt(ano);
                 Song song = new Song(ID, Nome, anoLancamento); // criar o obj Utilizador
-                songs.put(ID,song); //guardar o objecto
+                songs.put(ID, song); //guardar o objecto
                 idCheck.add(ID);
                 infoSong.ok++;
             } else {
@@ -41,19 +41,20 @@ public class SongsFunctions {
         return SongsFunctions.songs;
     }
 
-    public static void joinInfo(){
-        for(String i : songs.keySet()){
-            if(ArtistsFunctions.artistas.containsKey(i) && DetailsFunctions.details.containsKey(i) ){
-                songs.get(i).detalhes=DetailsFunctions.details.get(i);
-                songs.get(i).artista=ArtistsFunctions.artistas.get(i);
+    public static void joinInfo() {
+        for (String i : songs.keySet()) {
+            if (ArtistsFunctions.artistas.containsKey(i) && DetailsFunctions.details.containsKey(i)) {
+                songs.get(i).detalhes = DetailsFunctions.details.get(i);
+                songs.get(i).artista = ArtistsFunctions.artistas.get(i);
             }
         }
     }
-    public static HashMap<String, Song> sortDetails(HashMap<String, Song> hm){
+
+    public static HashMap<String, Song> sortDetails(HashMap<String, Song> hm) {
         HashMap<String, Song> detailsSort;
         ArrayList<Song> dance = new ArrayList<>();
 
-        detailsSort=SortHashMap.sortByValue(hm);
+        detailsSort = SortHashMap.sortByValue(hm);
         return detailsSort;
     }
 }

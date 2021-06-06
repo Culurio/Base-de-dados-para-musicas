@@ -14,8 +14,8 @@ public class DetailsFunctions {
         FileReader songDetails = new FileReader(filename);
         BufferedReader reader = new BufferedReader(songDetails);
         details.clear();
-        infoDetails.ok=0;
-        infoDetails.ignored=0;
+        infoDetails.ok = 0;
+        infoDetails.ignored = 0;
         String linha;
         while ((linha = reader.readLine()) != null) {
             String[] dados = linha.split("@");
@@ -28,7 +28,7 @@ public class DetailsFunctions {
                 double vivacidade = Double.parseDouble(dados[5].trim());
                 double volumeMedio = Double.parseDouble(dados[6].trim());
                 SongDetails detail = new SongDetails(ID, duração, letraExplicita, popularidade, dancabilidade, vivacidade, volumeMedio); // criar o obj Utilizador
-                details.put(ID,detail); //guardar o objecto
+                details.put(ID, detail); //guardar o objecto
                 infoDetails.ok++;
             } else {
                 infoDetails.ignored++;
