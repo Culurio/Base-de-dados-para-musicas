@@ -3,6 +3,7 @@ package pt.ulusofona.aed.deisiRockstar2021;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DetailsFunctions {
@@ -34,11 +35,5 @@ public class DetailsFunctions {
             }
         }
         reader.close();
-    }
-
-    public static HashMap<String, SongDetails> sortDetails(HashMap<String, SongDetails> hm){
-        HashMap<String, SongDetails> detailsSort;
-        detailsSort=SortHashMap.sortByValue(hm);
-        return detailsSort;
     }
 }

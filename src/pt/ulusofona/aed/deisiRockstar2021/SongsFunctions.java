@@ -3,6 +3,7 @@ package pt.ulusofona.aed.deisiRockstar2021;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.HashMap;
 
@@ -47,5 +48,12 @@ public class SongsFunctions {
                 songs.get(i).artista=ArtistsFunctions.artistas.get(i);
             }
         }
+    }
+    public static HashMap<String, Song> sortDetails(HashMap<String, Song> hm){
+        HashMap<String, Song> detailsSort;
+        ArrayList<Song> dance = new ArrayList<>();
+
+        detailsSort=SortHashMap.sortByValue(hm);
+        return detailsSort;
     }
 }
