@@ -40,7 +40,7 @@ public class ArtistsFunctions {
     }
 
     public static boolean validLine(String[] dados) {
-        if ((dados.length == 2) && SongsFunctions.idCheck.contains(dados[0].trim()) && !idCheck.contains(dados[0].trim())) {
+        if ((dados.length == 2) && !idCheck.contains(dados[0].trim())) {
             String Nome = filterName(dados[1].trim());
             String[] Nomes = Nome.split(",");
             for (String nome : Nomes) {

@@ -83,16 +83,5 @@ public class CommandsFunctions {
         }
         return erro;
     }
-    public static String cleanup(){
-        HashMap<String, Song> songs = new HashMap<>();
-        for (String i : SongsFunctions.songs.keySet()) {
-            if (SongsFunctions.songs.get(i).detalhes != null && SongsFunctions.songs.get(i).artista != null ) {
-                songs.put(i, SongsFunctions.songs.get(i));
-            }
-        }
-        SongsFunctions.songs.clear();
-        SongsFunctions.songs=songs;
-        return"";
-    }
 
 }

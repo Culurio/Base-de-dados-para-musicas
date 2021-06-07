@@ -44,7 +44,7 @@ public class Main {
             case "GET_MOST_DANCEABLE": return CommandsFunctions.getMostDanceable(commands[1], commands[2], commands[3]);
             case "ADD_TAGS": return CommandsFunctions.addTag(commands[1],commands[2]);
             case "REMOVE_TAGS": return CommandsFunctions.removeTags(commands[1],commands[2]);
-            case "CLEANUP": return  CommandsFunctions.cleanup();
+            case "CLEANUP": return  CleanupFunctions.cleanup();
             default: return "Illegal command. Try again";
         }
     }
