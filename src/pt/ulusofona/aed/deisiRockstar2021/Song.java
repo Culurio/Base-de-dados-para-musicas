@@ -7,7 +7,6 @@ public class Song {
     int anoLancamento;
     Artista artista;
     SongDetails detalhes;
-    String tag;
 
     Song() {
     }

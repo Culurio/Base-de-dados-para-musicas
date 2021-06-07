@@ -5,4 +5,4 @@
 7dD5DEzjhofoItSG7QwVoY @ "['La Sonora Matancera', 'Carlos Argentino']"
 37zoJIMxB98H2fbidrwxUO @ ['Supertramp']
 1sNctqVr9zdS7i1RZNjIgY @ ['Mountain John']
-0nxvFG50rGXkiFsdfxqOO2 @ ['Cláudio Costa']
+0nxvFG50rGXkiFsdfxqOO2 @ ['CláudioCosta']

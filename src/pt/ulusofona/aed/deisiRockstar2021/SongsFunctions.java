@@ -52,7 +52,6 @@ public class SongsFunctions {
 
     public static HashMap<String, Song> sortDetails(HashMap<String, Song> hm) {
         HashMap<String, Song> detailsSort;
-        ArrayList<Song> dance = new ArrayList<>();
 
         detailsSort = SortHashMap.sortByValue(hm);
         return detailsSort;
