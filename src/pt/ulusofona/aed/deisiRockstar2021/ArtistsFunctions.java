@@ -9,7 +9,6 @@ import java.util.TreeSet;
 public class ArtistsFunctions {
     static HashMap<String, Artista> artistas = new HashMap<>();
     static ParseInfo infoArtist = new ParseInfo(0, 0);
-    static TreeSet<String> idCheck = new TreeSet<>();
 
     public static void lerArtists(String filename) throws IOException {
         FileReader songArtists = new FileReader(filename);
@@ -26,7 +25,6 @@ public class ArtistsFunctions {
                 String Nome = filterName(dados[1].trim());
                 Artista artista = new Artista(ID, Nome); // criar o obj Utilizador
                 infoArtist.ok++;
-                idCheck.add(ID);
                 artistas.put(ID, artista); //guardar o objecto
             } else {
                 infoArtist.ignored++;
@@ -40,7 +38,7 @@ public class ArtistsFunctions {
     }
 
     public static boolean validLine(String[] dados) {
-        if ((dados.length == 2) && !idCheck.contains(dados[0].trim())) {
+        if ((dados.length == 2) && !artistas.containsKey(dados[0].trim())) {
             String Nome = filterName(dados[1].trim());
             String[] Nomes = Nome.split(",");
             for (String nome : Nomes) {

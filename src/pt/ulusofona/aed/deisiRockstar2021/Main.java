@@ -21,7 +21,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         System.out.println("Welcome to DEISI Rockstar!");
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
