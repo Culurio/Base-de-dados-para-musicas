@@ -23,28 +23,31 @@ public class Main {
         }
 
         System.out.println("Welcome to DEISI Rockstar!");
-
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();
         while (line != null && !line.equals("KTHXBYE")) {
-            String result = execute(line);
             long start = System.currentTimeMillis();
+            String result = execute(line);
             System.out.println(result);
             long end = System.currentTimeMillis();
-            System.out.println("Took: " + ((end - start) / 1000000) + "ms");
+            System.out.println("Took: " + (end - start) + "ms");
             line = in.nextLine();
         }
 
     }
     public static String execute(String command) {
-        String[] commands = command.split(" ");
-        switch (commands[0]) {
-            case "COUNT_SONGS_YEAR": return CommandsFunctions.countSongYears(commands[1]);
-            case "GET_ARTISTS_FOR_TAG": return CommandsFunctions.getArtistsForTag(commands[1]);
-            case "GET_MOST_DANCEABLE": return CommandsFunctions.getMostDanceable(commands[1], commands[2], commands[3]);
-            case "ADD_TAGS": return CommandsFunctions.addTag(commands[1],commands[2]);
-            case "REMOVE_TAGS": return CommandsFunctions.removeTags(commands[1],commands[2]);
-            case "CLEANUP": return  CleanupFunctions.cleanup();
+        String[] commands;
+        String[] FirstCommand=command.split(" ");
+        command=command.replace(FirstCommand[0],"");
+        command=command.replace(" "+FirstCommand[1],FirstCommand[1]);
+        switch (FirstCommand[0]) {
+            case "COUNT_SONGS_YEAR":commands=command.split(" ");return CommandsFunctions.countSongYears(commands[0]);
+            case "GET_ARTISTS_FOR_TAG":commands=command.split(" "); return CommandsFunctions.getArtistsForTag(commands[0]);
+            case "GET_MOST_DANCEABLE":commands=command.split(" "); return CommandsFunctions.getMostDanceable(commands[0], commands[1], commands[2]);
+            case "ADD_TAGS":commands=command.split(";"); return CommandsFunctions.addTag(commands[0],commands[1]);
+            case "REMOVE_TAGS":commands=command.split(";"); return CommandsFunctions.removeTags(commands[0],commands[1]);
+            case "COUNT_DUPLICATE_SONGS_YEAR":commands=command.split(" "); return CommandsFunctions.countDuplicateSongYears(commands[0]);
+            case "CLEANUP":return  CleanupFunctions.cleanup();
             default: return "Illegal command. Try again";
         }
     }

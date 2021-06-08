@@ -1,7 +1,7 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeSet;
 
 public class CommandsFunctions {
     public static String countSongYears(String years) {
@@ -49,7 +49,6 @@ public class CommandsFunctions {
 
     public static String addTag(String nomeDoArtista, String tag) {
         String erro = "Inexistent artist";
-
         for (String i : SongsFunctions.songs.keySet()) {
             if(SongsFunctions.songs.get(i).artista.nome.equals(nomeDoArtista)){
                 for (String j : SongsFunctions.songs.get(i).artista.tag) {
@@ -84,4 +83,21 @@ public class CommandsFunctions {
         return erro;
     }
 
+    public static String countDuplicateSongYears (String years){
+        int yearsInt = Integer.parseInt(years);
+        TreeSet<String> nameCheck = new TreeSet<>();
+        int count = 0;
+        for (String i : SongsFunctions.songs.keySet()) {
+            if (SongsFunctions.songs.get(i).anoLancamento == yearsInt && nameCheck.contains(SongsFunctions.songs.get(i).nome)) {
+                count++;
+            }else{
+                nameCheck.add(SongsFunctions.songs.get(i).nome);
+            }
+        }
+        return count + "";
+    }
+
+    public static String GET_ARTISTS_ONE_SONG(String year1,String year2){
+        return null;
+    }
 }
