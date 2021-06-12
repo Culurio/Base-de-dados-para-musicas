@@ -1,9 +1,6 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.TreeSet;
+import java.util.*;
 
 public class CommandsFunctions {
     public static String countSongYears(String years) {
@@ -99,29 +96,31 @@ public class CommandsFunctions {
         return count + "";
     }
 
-    //“<Nome artista> | <Nome da música> |<Ano>\n”
     public static String GetArtistsOneSong(String year1,String year2){
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
-        LinkedHashMap<String, Song> names = new LinkedHashMap<String, Song>();
-        String result="";
+        TreeMap<String, Song> names = new TreeMap<>();
+        StringBuilder result= new StringBuilder();
+
         for (String i : SongsFunctions.songs.keySet()) {
-            if(SongsFunctions.songs.get(i).anoLancamento>=year1Int &&SongsFunctions.songs.get(i).anoLancamento<=year2Int ){
-                if(!names.containsKey(SongsFunctions.songs.get(i).artista.nome)){
-                    names.put(SongsFunctions.songs.get(i).artista.nome,SongsFunctions.songs.get(i));
-                }else{
+            if(SongsFunctions.songs.get(i).anoLancamento>=year1Int && SongsFunctions.songs.get(i).anoLancamento<=year2Int ) {
+                if (!names.containsKey(SongsFunctions.songs.get(i).artista.nome)) {
+                    names.put(SongsFunctions.songs.get(i).artista.nome, SongsFunctions.songs.get(i));
+                } else {
                     names.remove(SongsFunctions.songs.get(i).artista.nome);
                 }
             }
         }
         for (Song i : names.values()) {
-            result+= i.artista.nome + " | " + i.nome + " | " + i.anoLancamento +"\n";
+            result.append(i.artista.nome).append(" | ").append(i.nome).append(" | ").append(i.anoLancamento).append("\n");
         }
-        return result;
+        return result.toString();
     }
 
     public static String GetUniqueTags(){
-        LinkedHashMap<String, Integer> tags = new LinkedHashMap<String, Integer>();
-        String result="";
+        LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
+        TreeMap<Integer, String> sortedTags = new TreeMap<>();
+        StringBuilder result= new StringBuilder();
+
         for (String i : SongsFunctions.songs.keySet()) {
             if(SongsFunctions.songs.get(i).artista.tag.size()!=0){
                 for (String j:SongsFunctions.songs.get(i).artista.tag) {
@@ -133,15 +132,13 @@ public class CommandsFunctions {
                 }
             }
         }
-        return  tags.toString();
-    }
-
-    public static ArrayList<String> sortedName(ArrayList<String> names){
-        Collections.sort(names);
-        return names;
-    }
-    public static boolean verifyYear(int year1,int year2){
-        return year1 > year2 || year1 == year2;
+        for (String i : tags.keySet()){
+            sortedTags.put(tags.get(i),i);
+        }
+        for (Integer i : sortedTags.keySet()){
+            result.append(sortedTags.get(i)).append(" | ").append(i).append("\n");
+        }
+        return  result.toString();
     }
 
 }
