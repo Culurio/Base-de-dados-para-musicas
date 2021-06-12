@@ -1,6 +1,8 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.TreeSet;
 
 public class CommandsFunctions {
@@ -97,7 +99,49 @@ public class CommandsFunctions {
         return count + "";
     }
 
-    public static String GET_ARTISTS_ONE_SONG(String year1,String year2){
-        return null;
+    //“<Nome artista> | <Nome da música> |<Ano>\n”
+    public static String GetArtistsOneSong(String year1,String year2){
+        int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
+        LinkedHashMap<String, Song> names = new LinkedHashMap<String, Song>();
+        String result="";
+        for (String i : SongsFunctions.songs.keySet()) {
+            if(SongsFunctions.songs.get(i).anoLancamento>=year1Int &&SongsFunctions.songs.get(i).anoLancamento<=year2Int ){
+                if(!names.containsKey(SongsFunctions.songs.get(i).artista.nome)){
+                    names.put(SongsFunctions.songs.get(i).artista.nome,SongsFunctions.songs.get(i));
+                }else{
+                    names.remove(SongsFunctions.songs.get(i).artista.nome);
+                }
+            }
+        }
+        for (Song i : names.values()) {
+            result+= i.artista.nome + " | " + i.nome + " | " + i.anoLancamento +"\n";
+        }
+        return result;
     }
+
+    public static String GetUniqueTags(){
+        LinkedHashMap<String, Integer> tags = new LinkedHashMap<String, Integer>();
+        String result="";
+        for (String i : SongsFunctions.songs.keySet()) {
+            if(SongsFunctions.songs.get(i).artista.tag.size()!=0){
+                for (String j:SongsFunctions.songs.get(i).artista.tag) {
+                    if(tags.containsKey(j) ){
+                        tags.replace(j,tags.get(j),tags.get(j)+1);
+                    }else{
+                        tags.put(j,1);
+                    }
+                }
+            }
+        }
+        return  tags.toString();
+    }
+
+    public static ArrayList<String> sortedName(ArrayList<String> names){
+        Collections.sort(names);
+        return names;
+    }
+    public static boolean verifyYear(int year1,int year2){
+        return year1 > year2 || year1 == year2;
+    }
+
 }

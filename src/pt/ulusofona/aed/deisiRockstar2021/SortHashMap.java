@@ -1,11 +1,10 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
 import java.util.*;
-import java.lang.*;
 
 public class SortHashMap {
-    public static HashMap<String, Song> sortByValue(HashMap<String, Song> hashm) {
-        HashMap<String, Song> songs = new HashMap<>();
+    public static LinkedHashMap<String, Song> sortByValue(LinkedHashMap<String, Song> hashm) {
+        LinkedHashMap<String, Song> songs = new LinkedHashMap<>();
 
         for (String i : hashm.keySet()) {
             if (hashm.get(i).detalhes != null) {
@@ -28,10 +27,11 @@ public class SortHashMap {
         });
 
         // put data from sorted list to hashmap
-        HashMap<String, Song> temp = new LinkedHashMap<String, Song>();
+        LinkedHashMap<String, Song> temp = new LinkedHashMap<String, Song>();
         for (Map.Entry<String, Song> aa : list) {
             temp.put(aa.getKey(), aa.getValue());
         }
         return temp;
     }
+
 }

@@ -2,10 +2,7 @@ package pt.ulusofona.aed.deisiRockstar2021;
 
 import org.junit.Test;
 
-//Isto está assim porque parece que
-//o professor não testa os ficheiros no jUnit test
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestMain {
     @Test

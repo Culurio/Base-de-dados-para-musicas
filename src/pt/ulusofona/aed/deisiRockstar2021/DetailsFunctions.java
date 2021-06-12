@@ -3,10 +3,10 @@ package pt.ulusofona.aed.deisiRockstar2021;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class DetailsFunctions {
-    static HashMap<String, SongDetails> details = new HashMap<>();
+    static LinkedHashMap<String, SongDetails> details = new LinkedHashMap<>();
     static ParseInfo infoDetails = new ParseInfo(0, 0);
 
     public static void lerDetails(String filename) throws IOException {
@@ -18,7 +18,7 @@ public class DetailsFunctions {
         String linha;
         while ((linha = reader.readLine()) != null) {
             String[] dados = linha.split("@");
-            if ((dados.length == 7) && SongsFunctions.idCheck.contains(dados[0].trim())) {
+            if ((dados.length == 7) && SongsFunctions.songs.containsKey(dados[0].trim()) && !details.containsKey(dados[0].trim())) {
                 String ID = dados[0].trim();
                 int duração = Integer.parseInt(dados[1].trim());
                 int letraExplicita = Integer.parseInt(dados[2].trim());

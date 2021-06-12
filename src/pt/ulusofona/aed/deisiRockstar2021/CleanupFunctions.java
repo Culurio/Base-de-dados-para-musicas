@@ -1,12 +1,13 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
-import java.util.HashMap;
+
+import java.util.LinkedHashMap;
 
 public class CleanupFunctions {
     public static String cleanup(){
         Cleanup clearInfo = new Cleanup(0, 0);
-        HashMap<String, Song> songs = new HashMap<>();
-        HashMap<String, Artista> artists = new HashMap<>();
+        LinkedHashMap<String, Song> songs = new LinkedHashMap<>();
+        LinkedHashMap<String, Artista> artists = new LinkedHashMap<>();
         for (String i : SongsFunctions.songs.keySet()) {
             if (SongsFunctions.songs.get(i).detalhes != null || SongsFunctions.songs.get(i).artista != null ) {
                 songs.put(i, SongsFunctions.songs.get(i));

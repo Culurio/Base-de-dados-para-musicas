@@ -3,13 +3,12 @@ package pt.ulusofona.aed.deisiRockstar2021;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 
 public class ArtistsFunctions {
-    static HashMap<String, Artista> artistas = new HashMap<>();
+    static LinkedHashMap<String, Artista> artistas = new LinkedHashMap<>();
     static ParseInfo infoArtist = new ParseInfo(0, 0);
-    static TreeSet<String> idCheck = new TreeSet<>();
+    static LinkedHashMap<String, Integer> nrTemas = new LinkedHashMap<String, Integer>();
 
     public static void lerArtists(String filename) throws IOException {
         FileReader songArtists = new FileReader(filename);
@@ -24,9 +23,9 @@ public class ArtistsFunctions {
             if (validLine(dados)) {
                 String ID = dados[0].trim();
                 String Nome = filterName(dados[1].trim());
+                numberOfThemes(Nome,ID);
                 Artista artista = new Artista(ID, Nome); // criar o obj Utilizador
                 infoArtist.ok++;
-                idCheck.add(ID);
                 artistas.put(ID, artista); //guardar o objecto
             } else {
                 infoArtist.ignored++;
@@ -40,7 +39,7 @@ public class ArtistsFunctions {
     }
 
     public static boolean validLine(String[] dados) {
-        if ((dados.length == 2) && !idCheck.contains(dados[0].trim())) {
+        if ((dados.length == 2) && !artistas.containsKey(dados[0].trim())) {
             String Nome = filterName(dados[1].trim());
             String[] Nomes = Nome.split(",");
             for (String nome : Nomes) {
@@ -51,5 +50,15 @@ public class ArtistsFunctions {
             return true;
         }
         return false;
+    }
+    public static void numberOfThemes(String artistName,String songKey){
+        if(!SongsFunctions.songs.containsKey(songKey)){
+
+        }
+        else if(nrTemas.containsKey(artistName) && SongsFunctions.songs.containsKey(songKey)){
+            nrTemas.replace(artistName,nrTemas.get(artistName),nrTemas.get(artistName)+1);
+        }else{
+            nrTemas.put(artistName,1);
+        }
     }
 }

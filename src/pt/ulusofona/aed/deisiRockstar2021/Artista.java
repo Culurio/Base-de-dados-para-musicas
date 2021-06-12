@@ -1,11 +1,12 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Artista {
     String id;
     String nome;
-    int nrTemas;
+    LinkedHashMap<String, Integer> nrTemas = new LinkedHashMap<String, Integer>();
     ArrayList<String> tag= new ArrayList<String>();
 
     Artista() {
