@@ -26,12 +26,11 @@ public class CommandsFunctions {
         return result.toString();
     }
 
-    //<Nome tema> : <Ano> : <Dançabilidade>\n”
     public static String getMostDanceable(String year1, String year2, String results) {
-
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2), resultsInt = Integer.parseInt(results);
         StringBuilder result = new StringBuilder();
         ArrayList<Song> mostDanceable = new ArrayList<>();
+
         for (String i : SongsFunctions.songs.keySet()) {
             mostDanceable.add(SongsFunctions.songs.get(i));
         }
@@ -118,27 +117,47 @@ public class CommandsFunctions {
 
     public static String GetUniqueTags(){
         LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
-        TreeMap<Integer, String> sortedTags = new TreeMap<>();
         StringBuilder result= new StringBuilder();
 
         for (String i : SongsFunctions.songs.keySet()) {
-            if(SongsFunctions.songs.get(i).artista.tag.size()!=0){
-                for (String j:SongsFunctions.songs.get(i).artista.tag) {
-                    if(tags.containsKey(j) ){
-                        tags.replace(j,tags.get(j),tags.get(j)+1);
-                    }else{
-                        tags.put(j,1);
-                    }
-                }
-            }
+            IncrementTags(tags, i);
         }
-        for (String i : tags.keySet()){
-            sortedTags.put(tags.get(i),i);
-        }
-        for (Integer i : sortedTags.keySet()){
-            result.append(sortedTags.get(i)).append(" | ").append(i).append("\n");
+        tags=SortHashMap.SortInt(tags);
+        List<String> alKeys = new ArrayList<String>(tags.keySet());
+        Collections.reverse(alKeys);
+        for (String i:alKeys) {
+            result.append(i).append(" | ").append(tags.get(i)).append("\n");
         }
         return  result.toString();
     }
+    public static String getUniqueTagsInBetweenYears(String year1, String year2) {
+        LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
+        StringBuilder result= new StringBuilder();
+        String noResults = "No results";
+        int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
 
+        for (String i : SongsFunctions.songs.keySet()) {
+            if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
+                IncrementTags(tags, i);
+            }
+        }
+        tags=SortHashMap.SortInt(tags);
+        for(String i:tags.keySet()){
+            result.append(i).append(" | ").append(tags.get(i)).append("\n");
+        }
+        return result.toString();
+    }
+
+    public static LinkedHashMap<String, Integer> IncrementTags(LinkedHashMap<String, Integer> tags,String hashKey){
+        if (SongsFunctions.songs.get(hashKey).artista.tag.size() != 0) {
+            for (String j : SongsFunctions.songs.get(hashKey).artista.tag) {
+                if (tags.containsKey(j)) {
+                    tags.replace(j, tags.get(j), tags.get(j) + 1);
+                } else {
+                    tags.put(j, 1);
+                }
+            }
+        }
+        return tags;
+    }
 }

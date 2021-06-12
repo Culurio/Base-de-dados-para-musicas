@@ -50,6 +50,7 @@ public class Main {
             case "REMOVE_TAGS":commands=command.split(";"); return CommandsFunctions.removeTags(commands[0],commands[1]);
             case "COUNT_DUPLICATE_SONGS_YEAR":commands=command.split(" "); return CommandsFunctions.countDuplicateSongYears(commands[0]);
             case "GET_UNIQUE_TAGS":return CommandsFunctions.GetUniqueTags();
+            case "GET_UNIQUE_TAGS_IN_BETWEEN_YEARS":commands=command.split(" ");return CommandsFunctions.getUniqueTagsInBetweenYears(commands[0],commands[1]);
             case "CLEANUP":return  CleanupFunctions.cleanup();
             default: return "Illegal command. Try again";
         }
