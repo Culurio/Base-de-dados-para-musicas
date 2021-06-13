@@ -160,4 +160,30 @@ public class CommandsFunctions {
         }
         return tags;
     }
+
+    /*public static String getTopArtistWithSongsBetween(String nrDeArtistas,String minimoString, String maximoString){
+        LinkedHashMap<String, Integer> numeroDeMusicas = new LinkedHashMap<>();
+        StringBuilder resultado = new StringBuilder();
+        int minimo = Integer.parseInt(minimoString), maximo = Integer.parseInt(maximoString);
+
+        for (String s : SongsFunctions.songs.keySet()){
+            if (SongsFunctions.songs.get(s).artista.nrTemas.get(s) >= minimo && SongsFunctions.songs.get(s).artista.nrTemas.get(s) <= maximo){
+                if (SongsFunctions.songs.get(s).artista.nrTemas.size() != 0){
+                    for (String i : SongsFunctions.songs.get(s).artista.nrTemas.keySet()){
+                        if (numeroDeMusicas.containsKey(i)){
+                            numeroDeMusicas.replace(i, numeroDeMusicas.get(i), numeroDeMusicas.get(i) + 1);
+                        } else{
+                            numeroDeMusicas.put(i, 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        numeroDeMusicas = SortHashMap.SortInt(numeroDeMusicas);
+        for (String f : numeroDeMusicas.keySet()){
+            resultado.append(f).append(" ").append(numeroDeMusicas.get(f)).append("\n");
+        }
+        return resultado.toString();
+    }*/
 }

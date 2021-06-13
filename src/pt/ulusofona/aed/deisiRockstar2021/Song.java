@@ -19,12 +19,17 @@ public class Song {
 
     public String toString() {
         if (detalhes != null && artista != null) {
-            float time = detalhes.duracao / 600;
-            time = time / 100;
-            String timeString = time + "";
-            timeString = timeString.replace('.', ':');
-            return id + " | " + nome + " | " + anoLancamento + " | " + timeString + " | " + detalhes.popularidade + " | " + artista.nome + " | (" + artista.nrTemas + ")\n";
+            String artistsThemes=artista.nrTemas.get(artista.nome)+"";
+            String [] artistas=artistsThemes.split(",");
+            Double detalhesDouble= detalhes.popularidade+0.0;
+            if(artistas.length!=1){
+                artistsThemes="";
+                for (String i:artistas){
+                    artistsThemes+= i+"/";
+                }
+            }
+            return id + " | " + nome + " | " + anoLancamento + " | " + (detalhes.duracao / 1000) / 60 + ":" + detalhes.duracao / (1000) % 60 + " | " + detalhesDouble + " | " + artista.nome + " | (" + artistsThemes + ")";
         }
-        return null;
+        return "";
     }
 }

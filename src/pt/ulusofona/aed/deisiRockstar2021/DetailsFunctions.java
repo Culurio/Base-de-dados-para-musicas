@@ -18,7 +18,7 @@ public class DetailsFunctions {
         String linha;
         while ((linha = reader.readLine()) != null) {
             String[] dados = linha.split("@");
-            if ((dados.length == 7) && SongsFunctions.songs.containsKey(dados[0].trim()) && !details.containsKey(dados[0].trim())) {
+            if (validDetails(dados)) {
                 String ID = dados[0].trim();
                 int duração = Integer.parseInt(dados[1].trim());
                 int letraExplicita = Integer.parseInt(dados[2].trim());
@@ -34,5 +34,17 @@ public class DetailsFunctions {
             }
         }
         reader.close();
+    }
+
+    public static Boolean validDetails(String[] dados){
+        if ((dados.length == 7) && SongsFunctions.songs.containsKey(dados[0].trim()) && !details.containsKey(dados[0].trim())) {
+            if(dados[1].contains(".") || dados[3].contains(".") || !dados[4].contains(".") || !dados[5].contains(".")
+                    || !dados[6].contains(".") || (Integer.parseInt(dados[2].trim())!=1 && Integer.parseInt(dados[2].trim()) !=0)){
+                return false;
+            }else {
+                return true;
+            }
+        }
+        return false;
     }
 }

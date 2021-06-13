@@ -22,8 +22,11 @@ public class ArtistsFunctions {
             String[] dados = linha.split("@");
             if (validLine(dados)) {
                 String ID = dados[0].trim();
-                String Nome = filterName(dados[1].trim());
-                numberOfThemes(Nome,ID);
+                String Nome = filterNames(dados[1].trim());
+                String[] nomes=Nome.split(",");
+                for(String i:nomes) {
+                    numberOfThemes(i, ID);
+                }
                 Artista artista = new Artista(ID, Nome); // criar o obj Utilizador
                 infoArtist.ok++;
                 artistas.put(ID, artista); //guardar o objecto
@@ -34,13 +37,20 @@ public class ArtistsFunctions {
         reader.close();
     }
 
-    public static String filterName(String artist) {
-        return artist.substring(2, artist.length() - 2);
+    public static String filterNames(String artist) {
+        if(artist.charAt(0)=='\"'){
+            artist=artist.substring(1,artist.length()-1);
+        }
+        artist=artist.replace('[',' ');
+        artist=artist.replace(']',' ');
+
+        return artist.trim();
     }
+
 
     public static boolean validLine(String[] dados) {
         if ((dados.length == 2) && !artistas.containsKey(dados[0].trim())) {
-            String Nome = filterName(dados[1].trim());
+            String Nome = filterNames(dados[1].trim());
             String[] Nomes = Nome.split(",");
             for (String nome : Nomes) {
                 if (nome.length() < 2) {
@@ -59,6 +69,13 @@ public class ArtistsFunctions {
             nrTemas.replace(artistName,nrTemas.get(artistName),nrTemas.get(artistName)+1);
         }else{
             nrTemas.put(artistName,1);
+        }
+    }
+    public static void assignThemes(){
+        for (String i:SongsFunctions.songs.keySet()){
+            if(nrTemas.containsKey(SongsFunctions.songs.get(i).artista.nome)){
+                SongsFunctions.songs.get(i).artista.nrTemas.put(artistas.get(i).nome,nrTemas.get(artistas.get(i).nome));
+            }
         }
     }
 }

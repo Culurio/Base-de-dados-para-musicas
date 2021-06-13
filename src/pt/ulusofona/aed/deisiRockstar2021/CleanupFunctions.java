@@ -9,7 +9,7 @@ public class CleanupFunctions {
         LinkedHashMap<String, Song> songs = new LinkedHashMap<>();
         LinkedHashMap<String, Artista> artists = new LinkedHashMap<>();
         for (String i : SongsFunctions.songs.keySet()) {
-            if (SongsFunctions.songs.get(i).detalhes != null || SongsFunctions.songs.get(i).artista != null ) {
+            if (SongsFunctions.songs.get(i).detalhes != null && SongsFunctions.songs.get(i).artista != null ) {
                 songs.put(i, SongsFunctions.songs.get(i));
             }else{
                 clearInfo.music++;
