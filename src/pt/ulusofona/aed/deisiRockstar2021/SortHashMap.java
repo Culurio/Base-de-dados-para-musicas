@@ -7,7 +7,7 @@ public class SortHashMap {
         LinkedHashMap<String, Song> songs = new LinkedHashMap<>();
 
         for (String i : hashm.keySet()) {
-            if ((hashm.get(i).detalhes != null) && (hashm.get(i).artista != null) ) {
+            if ((hashm.get(i).detalhes != null) && (hashm.get(i).artista != null)) {
                 songs.put(i, hashm.get(i));
             }
         }
@@ -34,7 +34,7 @@ public class SortHashMap {
         return temp;
     }
 
-    public static LinkedHashMap<String, Integer> SortInt(LinkedHashMap<String, Integer> hashm) {
+    public static LinkedHashMap<String, Integer> sortInt(LinkedHashMap<String, Integer> hashm) {
         LinkedHashMap<String, Integer> tags = hashm;
 
         List<Map.Entry<String, Integer>> list =

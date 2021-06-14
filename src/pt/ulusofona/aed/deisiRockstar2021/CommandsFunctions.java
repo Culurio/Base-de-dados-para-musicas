@@ -17,20 +17,25 @@ public class CommandsFunctions {
     public static String getArtistsForTag(String tag) {
         StringBuilder result = new StringBuilder();
         for (String i : SongsFunctions.songs.keySet()) {
-            for (String j : SongsFunctions.songs.get(i).artista.tag) {
-                if (j.equals(tag)) {
-                    result.append(SongsFunctions.songs.get(i).artista.nome);
+            if (SongsFunctions.songs.get(i).artista != null && SongsFunctions.songs.get(i).detalhes != null) {
+                for (String j : SongsFunctions.songs.get(i).artista.tag) {
+                    if (j.equals(tag)) {
+                        result.append(SongsFunctions.songs.get(i).artista.nome).append(";");
+                    }
                 }
             }
         }
-        return result.toString();
+        if (result.toString().length() == 0) {
+            return ErrorMessages.NoResults();
+        }
+        return result.substring(0, result.toString().length() - 1);
     }
 
     public static String getMostDanceable(String year1, String year2, String results) {
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2), resultsInt = Integer.parseInt(results);
         StringBuilder result = new StringBuilder();
         ArrayList<Song> mostDanceable = new ArrayList<>();
-        LinkedHashMap<String, Song> songForDetails = SongsFunctions.songs;
+        LinkedHashMap<String, Song> songForDetails;
         songForDetails = SongsFunctions.sortDetails(SongsFunctions.songs);
 
         for (String i : songForDetails.keySet()) {
@@ -38,42 +43,47 @@ public class CommandsFunctions {
         }
         int danceableOrder = mostDanceable.size() - 1;
 
-        for (int i = danceableOrder; i >= 0 && resultsInt<=i; i--) {
+        for (int i = danceableOrder; i >= danceableOrder - resultsInt; i--) {
             if (mostDanceable.get(i).anoLancamento >= year1Int && mostDanceable.get(i).anoLancamento <= year2Int) {
-                result.append(mostDanceable.get(i).nome).append(" ").append(mostDanceable.get(i).anoLancamento).append(" ").append(mostDanceable.get(i).detalhes.dancabilidade).append("\n");
+            } else {
+                mostDanceable.remove(i);
             }
+        }
+        danceableOrder = mostDanceable.size() - 1;
+        for (int i = danceableOrder; i > danceableOrder - resultsInt; i--) {
+            result.append(mostDanceable.get(i).nome).append(" : ").append(mostDanceable.get(i).anoLancamento).append(" : ").append(mostDanceable.get(i).detalhes.dancabilidade).append("\n");
         }
         return result.toString();
 
     }
 
     public static String addTag(String resposta) {
-        String []respostas=resposta.split(";");
-        String nome=respostas[0];
-        String tag="";
-        String result=nome+" | ";
+        String[] respostas = resposta.split(";");
+        String nome = respostas[0];
+        String tag;
+        StringBuilder result = new StringBuilder(nome + " | ");
 
         for (String i : SongsFunctions.songs.keySet()) {
-            if(SongsFunctions.songs.get(i).artista!=null && SongsFunctions.songs.get(i).artista.nome.equals(nome)){
-                for(int ii=1; ii< respostas.length;ii++) {
-                    tag=respostas[ii].toUpperCase();
-                    if(!tagUsed(tag,i)){
+            if (SongsFunctions.songs.get(i).artista != null && SongsFunctions.songs.get(i).artista.nome.equals(nome)) {
+                for (int ii = 1; ii < respostas.length; ii++) {
+                    tag = respostas[ii].toUpperCase();
+                    if (!tagUsed(tag, i)) {
                         SongsFunctions.songs.get(i).artista.tag.add(tag);
                     }
                 }
-                for(int iii=0; iii<SongsFunctions.songs.get(i).artista.tag.size();iii++){
-                    result +=SongsFunctions.songs.get(i).artista.tag.get(iii)+",";
+                for (int iii = 0; iii < SongsFunctions.songs.get(i).artista.tag.size(); iii++) {
+                    result.append(SongsFunctions.songs.get(i).artista.tag.get(iii)).append(",");
                 }
-                return result.substring(0,result.length()-1);
+                return result.substring(0, result.length() - 1);
             }
         }
         return ErrorMessages.Inexistent_artist();
     }
 
-    public static Boolean tagUsed(String tag,String key){
-        if(SongsFunctions.songs.get(key).artista.tag.size()!=0){
-            for(int i=0; i<SongsFunctions.songs.get(key).artista.tag.size();i++){
-                if(SongsFunctions.songs.get(key).artista.tag.get(i).equals(tag)){
+    public static Boolean tagUsed(String tag, String key) {
+        if (SongsFunctions.songs.get(key).artista.tag.size() != 0) {
+            for (int i = 0; i < SongsFunctions.songs.get(key).artista.tag.size(); i++) {
+                if (SongsFunctions.songs.get(key).artista.tag.get(i).equals(tag)) {
                     return true;
                 }
             }
@@ -82,42 +92,52 @@ public class CommandsFunctions {
         return false;
     }
 
-    public static String removeTags(String nomeDoArtista, String tag){
-        for (String i : SongsFunctions.songs.keySet()){
-            if (SongsFunctions.songs.get(i).artista.nome.equals(nomeDoArtista)){
-                for (String j : SongsFunctions.songs.get(i).artista.tag) {
-                    if (j.equals(tag)) {
+    public static String removeTags(String resposta) {
+        String[] respostas = resposta.split(";");
+        String nome = respostas[0];
+        String tag;
+        StringBuilder result = new StringBuilder(nome + " | ");
+
+        for (String i : SongsFunctions.songs.keySet()) {
+            if (SongsFunctions.songs.get(i).artista != null && SongsFunctions.songs.get(i).artista.nome.equals(nome)) {
+                for (int ii = 1; ii < respostas.length; ii++) {
+                    tag = respostas[ii].toUpperCase();
+                    if (tagUsed(tag, i)) {
                         SongsFunctions.songs.get(i).artista.tag.remove(tag);
-                        return SongsFunctions.songs.get(i).artista.nome + " | " + SongsFunctions.songs.get(i).artista.tag.toString();
                     }
                 }
-                return nomeDoArtista + " | " + ErrorMessages.No_tags();
+                for (int iii = 0; iii < SongsFunctions.songs.get(i).artista.tag.size(); iii++) {
+                    result.append(SongsFunctions.songs.get(i).artista.tag.get(iii)).append(",");
+                }
+                if (SongsFunctions.songs.get(i).artista.tag.size() == 0) {
+                    return result + ErrorMessages.No_tags();
+                }
+                return result.substring(0, result.length() - 1);
             }
         }
         return ErrorMessages.Inexistent_artist();
     }
 
-    public static String countDuplicateSongYears (String years){
+    public static String countDuplicateSongYears(String years) {
         int yearsInt = Integer.parseInt(years);
         TreeSet<String> nameCheck = new TreeSet<>();
         int count = 0;
         for (String i : SongsFunctions.songs.keySet()) {
             if (SongsFunctions.songs.get(i).anoLancamento == yearsInt && nameCheck.contains(SongsFunctions.songs.get(i).nome)) {
                 count++;
-            }else{
+            } else {
                 nameCheck.add(SongsFunctions.songs.get(i).nome);
             }
         }
         return count + "";
     }
 
-    public static String GetArtistsOneSong(String year1,String year2){
+    public static String getArtistsOneSong(String year1, String year2) {
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
         TreeMap<String, Song> names = new TreeMap<>();
-        StringBuilder result= new StringBuilder();
-
+        StringBuilder result = new StringBuilder();
         for (String i : SongsFunctions.songs.keySet()) {
-            if(SongsFunctions.songs.get(i).anoLancamento>=year1Int && SongsFunctions.songs.get(i).anoLancamento<=year2Int ) {
+            if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
                 if (!names.containsKey(SongsFunctions.songs.get(i).artista.nome)) {
                     names.put(SongsFunctions.songs.get(i).artista.nome, SongsFunctions.songs.get(i));
                 } else {
@@ -131,39 +151,40 @@ public class CommandsFunctions {
         return result.toString();
     }
 
-    public static String GetUniqueTags(){
+    public static String getUniqueTags() {
         LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
-        StringBuilder result= new StringBuilder();
+        StringBuilder result = new StringBuilder();
 
         for (String i : SongsFunctions.songs.keySet()) {
-            IncrementTags(tags, i);
+            incrementTags(tags, i);
         }
-        tags=SortHashMap.SortInt(tags);
-        List<String> alKeys = new ArrayList<String>(tags.keySet());
+        tags = SortHashMap.sortInt(tags);
+        List<String> alKeys = new ArrayList<>(tags.keySet());
         Collections.reverse(alKeys);
-        for (String i:alKeys) {
-            result.append(i).append(" | ").append(tags.get(i)).append("\n");
-        }
-        return  result.toString();
-    }
-    public static String getUniqueTagsInBetweenYears(String year1, String year2) {
-        LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
-        StringBuilder result= new StringBuilder();
-        int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
-
-        for (String i : SongsFunctions.songs.keySet()) {
-            if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
-                IncrementTags(tags, i);
-            }
-        }
-        tags=SortHashMap.SortInt(tags);
-        for(String i:tags.keySet()){
+        for (String i : alKeys) {
             result.append(i).append(" | ").append(tags.get(i)).append("\n");
         }
         return result.toString();
     }
 
-    public static LinkedHashMap<String, Integer> IncrementTags(LinkedHashMap<String, Integer> tags,String hashKey){
+    public static String getUniqueTagsInBetweenYears(String year1, String year2) {
+        LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
+        StringBuilder result = new StringBuilder();
+        int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
+
+        for (String i : SongsFunctions.songs.keySet()) {
+            if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
+                incrementTags(tags, i);
+            }
+        }
+        tags = SortHashMap.sortInt(tags);
+        for (String i : tags.keySet()) {
+            result.append(i).append(" | ").append(tags.get(i)).append("\n");
+        }
+        return result.toString();
+    }
+
+    public static LinkedHashMap<String, Integer> incrementTags(LinkedHashMap<String, Integer> tags, String hashKey) {
         if (SongsFunctions.songs.get(hashKey).artista.tag.size() != 0) {
             for (String j : SongsFunctions.songs.get(hashKey).artista.tag) {
                 if (tags.containsKey(j)) {

@@ -7,7 +7,7 @@ public class Artista {
     String id;
     String nome;
     LinkedHashMap<String, Integer> nrTemas = new LinkedHashMap<String, Integer>();
-    ArrayList<String> tag= new ArrayList<String>();
+    ArrayList<String> tag = new ArrayList<String>();
 
     Artista() {
     }

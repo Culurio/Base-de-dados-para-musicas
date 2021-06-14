@@ -21,7 +21,7 @@ public class SongsFunctions {
         String linha;
         while ((linha = reader.readLine()) != null) {
             String[] dados = linha.split("@");
-            if (dados[0].length()!=1 && dados.length == 3 && !songs.containsKey(dados[0].trim())) {
+            if (dados[0].length() != 1 && dados.length == 3 && !songs.containsKey(dados[0].trim())) {
                 String ID = dados[0].trim();
                 String Nome = dados[1].trim();
                 String ano = dados[2].trim();
@@ -38,7 +38,6 @@ public class SongsFunctions {
     }
 
 
-
     public static void joinInfo() {
         for (String i : songs.keySet()) {
             if (ArtistsFunctions.artistas.containsKey(i) && DetailsFunctions.details.containsKey(i)) {
@@ -47,15 +46,16 @@ public class SongsFunctions {
             }
         }
     }
-    public static LinkedHashMap<String, Song> onlyValidSongs(){
-         LinkedHashMap<String, Song> newSongs = songs;
-         ArrayList<String> invalidSongs = new ArrayList<>();
+
+    public static LinkedHashMap<String, Song> onlyValidSongs() {
+        LinkedHashMap<String, Song> newSongs = songs;
+        ArrayList<String> invalidSongs = new ArrayList<>();
         for (String i : newSongs.keySet()) {
-            if ((newSongs.get(i).detalhes == null) && (newSongs.get(i).artista == null) ) {
+            if ((newSongs.get(i).detalhes == null) && (newSongs.get(i).artista == null)) {
                 invalidSongs.add(i);
             }
         }
-        for(String i : invalidSongs){
+        for (String i : invalidSongs) {
             newSongs.remove(i);
         }
         return newSongs;
