@@ -52,34 +52,37 @@ public class CommandsFunctions {
         String nome=respostas[0];
         String tag="";
         String result=nome+" | ";
-        String erro = "Inexistent artist";
+
         for (String i : SongsFunctions.songs.keySet()) {
             if(SongsFunctions.songs.get(i).artista!=null && SongsFunctions.songs.get(i).artista.nome.equals(nome)){
-                for (String j : SongsFunctions.songs.get(i).artista.tag) {
-                    for(int ii=1; ii< respostas.length;ii++){
-                        tag=respostas[ii];
-                        if (SongsFunctions.songs.get(i).artista.tag.size()!=0 && !j.equals(tag)) {
-                            SongsFunctions.songs.get(i).artista.tag.add(tag);
-                            result +=" | " + SongsFunctions.songs.get(i).artista.tag.toString();
-                        }
-                    }
-                }
                 for(int ii=1; ii< respostas.length;ii++) {
-                    tag=respostas[ii];
-                    if (SongsFunctions.songs.get(i).artista.tag.size() == 0) {
+                    tag=respostas[ii].toUpperCase();
+                    if(!tagUsed(tag,i)){
                         SongsFunctions.songs.get(i).artista.tag.add(tag);
-                        result +=SongsFunctions.songs.get(i).artista.tag.toString()+" | ";
                     }
                 }
-                return result;
+                for(int iii=0; iii<SongsFunctions.songs.get(i).artista.tag.size();iii++){
+                    result +=SongsFunctions.songs.get(i).artista.tag.get(iii)+",";
+                }
+                return result.substring(0,result.length()-1);
             }
         }
-        return erro;
+        return ErrorMessages.Inexistent_artist();
+    }
+
+    public static Boolean tagUsed(String tag,String key){
+        if(SongsFunctions.songs.get(key).artista.tag.size()!=0){
+            for(int i=0; i<SongsFunctions.songs.get(key).artista.tag.size();i++){
+                if(SongsFunctions.songs.get(key).artista.tag.get(i).equals(tag)){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     public static String removeTags(String nomeDoArtista, String tag){
-        String noTags = "No tags";
-        String erro = "Inexistent artist";
         for (String i : SongsFunctions.songs.keySet()){
             if (SongsFunctions.songs.get(i).artista.nome.equals(nomeDoArtista)){
                 for (String j : SongsFunctions.songs.get(i).artista.tag) {
@@ -88,10 +91,10 @@ public class CommandsFunctions {
                         return SongsFunctions.songs.get(i).artista.nome + " | " + SongsFunctions.songs.get(i).artista.tag.toString();
                     }
                 }
-                return nomeDoArtista + " | " + noTags;
+                return nomeDoArtista + " | " + ErrorMessages.No_tags();
             }
         }
-        return erro;
+        return ErrorMessages.Inexistent_artist();
     }
 
     public static String countDuplicateSongYears (String years){
@@ -146,7 +149,6 @@ public class CommandsFunctions {
     public static String getUniqueTagsInBetweenYears(String year1, String year2) {
         LinkedHashMap<String, Integer> tags = new LinkedHashMap<>();
         StringBuilder result= new StringBuilder();
-        String noResults = "No results";
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
 
         for (String i : SongsFunctions.songs.keySet()) {
