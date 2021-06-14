@@ -210,16 +210,21 @@ public class CommandsFunctions {
     public static String getTopArtistWithSongsBetween(String nrDeArtistas,String minimoString, String maximoString){
         LinkedHashMap<String, Integer> numeroDeMusicas = new LinkedHashMap<>();
         StringBuilder resultado = new StringBuilder();
-        int minimo = Integer.parseInt(minimoString), maximo = Integer.parseInt(maximoString);
+        int minimo = Integer.parseInt(minimoString), maximo = Integer.parseInt(maximoString),count=0;
+        int nrDeArtistasInt =Integer.parseInt(nrDeArtistas);
 
         for (String s : SongsFunctions.songs.keySet()){
             if (betweenYear(s,minimo,maximo)){
                 if (SongsFunctions.songs.get(s).artista.nrTemas.size() != 0){
                     for (String i : SongsFunctions.songs.get(s).artista.nrTemas.keySet()){
-                        if (numeroDeMusicas.containsKey(i)){
-                            numeroDeMusicas.replace(i, numeroDeMusicas.get(i), numeroDeMusicas.get(i) + 1);
-                        } else{
-                            numeroDeMusicas.put(i, 1);
+                        if(count<nrDeArtistasInt){
+                            if (numeroDeMusicas.containsKey(i)){
+                                numeroDeMusicas.replace(i, numeroDeMusicas.get(i), numeroDeMusicas.get(i) + 1);
+                            } else{
+                                numeroDeMusicas.put(i, 1);
+                            }
+                        }else{
+                            break;
                         }
                     }
                 }
