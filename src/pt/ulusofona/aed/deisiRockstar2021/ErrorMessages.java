@@ -1,15 +1,15 @@
 package pt.ulusofona.aed.deisiRockstar2021;
 
 public class ErrorMessages {
-    public static String Inexistent_artist() {
+    public static String inexistent_artist() {
         return "Inexistent artist";
     }
 
-    public static String No_tags() {
+    public static String no_tags() {
         return "No tags";
     }
 
-    public static String NoResults() {
+    public static String noResults() {
         return "No results";
     }
 

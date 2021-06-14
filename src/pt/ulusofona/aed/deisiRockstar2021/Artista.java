@@ -6,8 +6,8 @@ import java.util.LinkedHashMap;
 public class Artista {
     String id;
     String nome;
-    LinkedHashMap<String, Integer> nrTemas = new LinkedHashMap<String, Integer>();
-    ArrayList<String> tag = new ArrayList<String>();
+    LinkedHashMap<String, Integer> nrTemas = new LinkedHashMap<>();
+    ArrayList<String> tag = new ArrayList<>();
 
     Artista() {
     }

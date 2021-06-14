@@ -11,11 +11,9 @@ public class SortHashMap {
                 songs.put(i, hashm.get(i));
             }
         }
-        // Create a list from elements of HashMap
         List<Map.Entry<String, Song>> list =
-                new LinkedList<Map.Entry<String, Song>>(songs.entrySet());
+                new LinkedList<>(songs.entrySet());
 
-        // Sort the list
 
         Collections.sort(list, new Comparator<Map.Entry<String, Song>>() {
             public int compare(Map.Entry<String, Song> o1,
@@ -26,7 +24,6 @@ public class SortHashMap {
             }
         });
 
-        // put data from sorted list to hashmap
         LinkedHashMap<String, Song> temp = new LinkedHashMap<String, Song>();
         for (Map.Entry<String, Song> aa : list) {
             temp.put(aa.getKey(), aa.getValue());

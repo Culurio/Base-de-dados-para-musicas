@@ -2,7 +2,11 @@ package pt.ulusofona.aed.deisiRockstar2021;
 
 import java.util.*;
 
+
 public class CommandsFunctions {
+    static Boolean flag=false;
+    static LinkedHashMap<String, Song> songForDetails=null;
+
     public static String countSongYears(String years) {
         int yearsInt = Integer.parseInt(years);
         int count = 0;
@@ -26,7 +30,7 @@ public class CommandsFunctions {
             }
         }
         if (result.toString().length() == 0) {
-            return ErrorMessages.NoResults();
+            return ErrorMessages.noResults();
         }
         return result.substring(0, result.toString().length() - 1);
     }
@@ -35,24 +39,24 @@ public class CommandsFunctions {
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2), resultsInt = Integer.parseInt(results);
         StringBuilder result = new StringBuilder();
         ArrayList<Song> mostDanceable = new ArrayList<>();
-        LinkedHashMap<String, Song> songForDetails;
-        songForDetails = SongsFunctions.sortDetails(SongsFunctions.songs);
+        if(!flag){
+            songForDetails = SongsFunctions.sortDetails(SongsFunctions.songs);
+        }
 
         for (String i : songForDetails.keySet()) {
-            mostDanceable.add(songForDetails.get(i));
+            if(songForDetails.get(i).anoLancamento>=year1Int && songForDetails.get(i).anoLancamento <= year2Int ){
+                mostDanceable.add(songForDetails.get(i));
+            }else {
+                mostDanceable.remove(songForDetails.get(i));
+            }
         }
         int danceableOrder = mostDanceable.size() - 1;
 
-        for (int i = danceableOrder; i >= danceableOrder - resultsInt; i--) {
-            if (mostDanceable.get(i).anoLancamento >= year1Int && mostDanceable.get(i).anoLancamento <= year2Int) {
-            } else {
-                mostDanceable.remove(i);
-            }
-        }
         danceableOrder = mostDanceable.size() - 1;
         for (int i = danceableOrder; i > danceableOrder - resultsInt; i--) {
             result.append(mostDanceable.get(i).nome).append(" : ").append(mostDanceable.get(i).anoLancamento).append(" : ").append(mostDanceable.get(i).detalhes.dancabilidade).append("\n");
         }
+        flag=true;
         return result.toString();
 
     }
@@ -77,7 +81,7 @@ public class CommandsFunctions {
                 return result.substring(0, result.length() - 1);
             }
         }
-        return ErrorMessages.Inexistent_artist();
+        return ErrorMessages.inexistent_artist();
     }
 
     public static Boolean tagUsed(String tag, String key) {
@@ -110,22 +114,22 @@ public class CommandsFunctions {
                     result.append(SongsFunctions.songs.get(i).artista.tag.get(iii)).append(",");
                 }
                 if (SongsFunctions.songs.get(i).artista.tag.size() == 0) {
-                    return result + ErrorMessages.No_tags();
+                    return result + ErrorMessages.no_tags();
                 }
                 return result.substring(0, result.length() - 1);
             }
         }
-        return ErrorMessages.Inexistent_artist();
+        return ErrorMessages.inexistent_artist();
     }
 
     public static String countDuplicateSongYears(String years) {
         int yearsInt = Integer.parseInt(years);
-        TreeSet<String> nameCheck = new TreeSet<>();
+            HashSet<String> nameCheck = new HashSet<>();
         int count = 0;
         for (String i : SongsFunctions.songs.keySet()) {
             if (SongsFunctions.songs.get(i).anoLancamento == yearsInt && nameCheck.contains(SongsFunctions.songs.get(i).nome)) {
                 count++;
-            } else {
+            } else if(SongsFunctions.songs.get(i).anoLancamento == yearsInt) {
                 nameCheck.add(SongsFunctions.songs.get(i).nome);
             }
         }
@@ -156,7 +160,9 @@ public class CommandsFunctions {
         StringBuilder result = new StringBuilder();
 
         for (String i : SongsFunctions.songs.keySet()) {
-            incrementTags(tags, i);
+            if(SongsFunctions.songs.get(i).artista != null && SongsFunctions.songs.get(i).detalhes != null ){
+                incrementTags(tags, i);
+            }
         }
         tags = SortHashMap.sortInt(tags);
         List<String> alKeys = new ArrayList<>(tags.keySet());
@@ -173,8 +179,10 @@ public class CommandsFunctions {
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2);
 
         for (String i : SongsFunctions.songs.keySet()) {
-            if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
-                incrementTags(tags, i);
+            if(SongsFunctions.songs.get(i).artista != null && SongsFunctions.songs.get(i).detalhes != null ) {
+                if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
+                    incrementTags(tags, i);
+                }
             }
         }
         tags = SortHashMap.sortInt(tags);
