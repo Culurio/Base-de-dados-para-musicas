@@ -73,14 +73,16 @@ public class ArtistsFunctions {
             nrTemas.put(artistName.trim(),1);
         }
     }
-    public static void assignThemes(){
+    public static void assignThemes(LinkedHashMap<String, Song> newSong){
         String artistName="";
-        for (String i:SongsFunctions.songs.keySet()){
-            artistName=SongsFunctions.songs.get(i).artista.nome;
-            String[]artists=artistName.split(",");
-            for(String j:artists){
-                if(nrTemas.containsKey(j)){
-                    SongsFunctions.songs.get(i).artista.nrTemas.put(artistas.get(i).nome,nrTemas.get(j));
+        for (String i:newSong.keySet()){
+            if(newSong.get(i).detalhes!=null && newSong.get(i).artista!=null){
+                artistName=newSong.get(i).artista.nome;
+                String[]artists=artistName.split(",");
+                for(String j:artists){
+                    if(nrTemas.containsKey(j)){
+                        newSong.get(i).artista.nrTemas.put(artistas.get(i).nome,nrTemas.get(j));
+                    }
                 }
             }
         }

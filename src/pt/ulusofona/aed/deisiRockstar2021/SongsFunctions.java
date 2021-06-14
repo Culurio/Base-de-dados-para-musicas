@@ -47,16 +47,18 @@ public class SongsFunctions {
             }
         }
     }
-    public static void onlyValidSongs(){
+    public static LinkedHashMap<String, Song> onlyValidSongs(){
+         LinkedHashMap<String, Song> newSongs = songs;
          ArrayList<String> invalidSongs = new ArrayList<>();
-        for (String i : songs.keySet()) {
-            if ((songs.get(i).detalhes == null) && (songs.get(i).artista == null) ) {
+        for (String i : newSongs.keySet()) {
+            if ((newSongs.get(i).detalhes == null) && (newSongs.get(i).artista == null) ) {
                 invalidSongs.add(i);
             }
         }
         for(String i : invalidSongs){
-           songs.remove(i);
+            newSongs.remove(i);
         }
+        return newSongs;
     }
 
     public static LinkedHashMap<String, Song> sortDetails(LinkedHashMap<String, Song> hm) {

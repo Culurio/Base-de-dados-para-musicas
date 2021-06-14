@@ -30,13 +30,15 @@ public class CommandsFunctions {
         int year1Int = Integer.parseInt(year1), year2Int = Integer.parseInt(year2), resultsInt = Integer.parseInt(results);
         StringBuilder result = new StringBuilder();
         ArrayList<Song> mostDanceable = new ArrayList<>();
+        LinkedHashMap<String, Song> songForDetails = SongsFunctions.songs;
+        songForDetails = SongsFunctions.sortDetails(SongsFunctions.songs);
 
-        for (String i : SongsFunctions.songs.keySet()) {
-            mostDanceable.add(SongsFunctions.songs.get(i));
+        for (String i : songForDetails.keySet()) {
+            mostDanceable.add(songForDetails.get(i));
         }
         int danceableOrder = mostDanceable.size() - 1;
 
-        for (int i = danceableOrder; i >= 0; i--) {
+        for (int i = danceableOrder; i >= 0 && resultsInt<=i; i--) {
             if (mostDanceable.get(i).anoLancamento >= year1Int && mostDanceable.get(i).anoLancamento <= year2Int) {
                 result.append(mostDanceable.get(i).nome).append(" ").append(mostDanceable.get(i).anoLancamento).append(" ").append(mostDanceable.get(i).detalhes.dancabilidade).append("\n");
             }
@@ -45,20 +47,31 @@ public class CommandsFunctions {
 
     }
 
-    public static String addTag(String nomeDoArtista, String tag) {
+    public static String addTag(String resposta) {
+        String []respostas=resposta.split(";");
+        String nome=respostas[0];
+        String tag="";
+        String result=nome+" | ";
         String erro = "Inexistent artist";
         for (String i : SongsFunctions.songs.keySet()) {
-            if(SongsFunctions.songs.get(i).artista.nome.equals(nomeDoArtista)){
+            if(SongsFunctions.songs.get(i).artista!=null && SongsFunctions.songs.get(i).artista.nome.equals(nome)){
                 for (String j : SongsFunctions.songs.get(i).artista.tag) {
-                    if (SongsFunctions.songs.get(i).artista.tag.size()!=0 && !j.equals(tag)) {
-                        SongsFunctions.songs.get(i).artista.tag.add(tag);
-                        return SongsFunctions.songs.get(i).artista.nome + " | " + SongsFunctions.songs.get(i).artista.tag.toString();
+                    for(int ii=1; ii< respostas.length;ii++){
+                        tag=respostas[ii];
+                        if (SongsFunctions.songs.get(i).artista.tag.size()!=0 && !j.equals(tag)) {
+                            SongsFunctions.songs.get(i).artista.tag.add(tag);
+                            result +=" | " + SongsFunctions.songs.get(i).artista.tag.toString();
+                        }
                     }
                 }
-                if(SongsFunctions.songs.get(i).artista.tag.size()==0){
-                    SongsFunctions.songs.get(i).artista.tag.add(tag);
-                    return SongsFunctions.songs.get(i).artista.nome + " | " + SongsFunctions.songs.get(i).artista.tag.toString();
+                for(int ii=1; ii< respostas.length;ii++) {
+                    tag=respostas[ii];
+                    if (SongsFunctions.songs.get(i).artista.tag.size() == 0) {
+                        SongsFunctions.songs.get(i).artista.tag.add(tag);
+                        result +=SongsFunctions.songs.get(i).artista.tag.toString()+" | ";
+                    }
                 }
+                return result;
             }
         }
         return erro;

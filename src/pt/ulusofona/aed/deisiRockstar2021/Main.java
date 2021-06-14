@@ -22,9 +22,7 @@ public class Main {
         ArtistsFunctions.lerArtists("song_artists.txt");
         DetailsFunctions.lerDetails("song_details.txt");
         SongsFunctions.joinInfo();
-        SongsFunctions.onlyValidSongs();
-        ArtistsFunctions.assignThemes();
-        SongsFunctions.songs = SongsFunctions.sortDetails(SongsFunctions.songs);
+        ArtistsFunctions.assignThemes(SongsFunctions.songs);
     }
 
     public static ArrayList<Song> getSongs() {
@@ -47,6 +45,7 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(getSongs());
         System.out.println(getParseInfo("songs.txt"));
         System.out.println(getParseInfo("song_artists.txt"));
         System.out.println(getParseInfo("song_details.txt"));
@@ -74,7 +73,7 @@ public class Main {
             case "COUNT_SONGS_YEAR":commands=command.split(" ");return CommandsFunctions.countSongYears(commands[0]);
             case "GET_ARTISTS_FOR_TAG":commands=command.split(" "); return CommandsFunctions.getArtistsForTag(commands[0]);
             case "GET_MOST_DANCEABLE":commands=command.split(" "); return CommandsFunctions.getMostDanceable(commands[0], commands[1], commands[2]);
-            case "ADD_TAGS":commands=command.split(";"); return CommandsFunctions.addTag(commands[0],commands[1]);
+            case "ADD_TAGS":return CommandsFunctions.addTag(command);
             case "REMOVE_TAGS":commands=command.split(";"); return CommandsFunctions.removeTags(commands[0],commands[1]);
             case "COUNT_DUPLICATE_SONGS_YEAR":commands=command.split(" "); return CommandsFunctions.countDuplicateSongYears(commands[0]);
             case "GET_UNIQUE_TAGS":return CommandsFunctions.GetUniqueTags();
