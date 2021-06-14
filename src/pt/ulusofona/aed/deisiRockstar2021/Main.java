@@ -47,10 +47,9 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(getParseInfo("songs.txt"));
         System.out.println(getParseInfo("song_artists.txt"));
         System.out.println(getParseInfo("song_details.txt"));
-        System.out.println(getParseInfo("songs.txt"));
-        System.out.println(getSongs());
         System.out.println("Welcome to DEISI Rockstar!");
         Scanner in = new Scanner(System.in);
         String line = in.nextLine();

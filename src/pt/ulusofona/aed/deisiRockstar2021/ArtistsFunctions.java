@@ -41,6 +41,7 @@ public class ArtistsFunctions {
         if(artist.charAt(0)=='\"'){
             artist=artist.substring(1,artist.length()-1);
         }
+        artist=artist.replace("\'","");
         artist=artist.replace('[',' ');
         artist=artist.replace(']',' ');
 
@@ -49,7 +50,8 @@ public class ArtistsFunctions {
 
 
     public static boolean validLine(String[] dados) {
-        if ((dados.length == 2) && !artistas.containsKey(dados[0].trim())) {
+        if ((dados.length == 2) && !artistas.containsKey(dados[0].trim()) && dados[1].contains("\'") &&
+                SongsFunctions.songs.containsKey(dados[0].trim())){
             String Nome = filterNames(dados[1].trim());
             String[] Nomes = Nome.split(",");
             for (String nome : Nomes) {
@@ -66,15 +68,20 @@ public class ArtistsFunctions {
 
         }
         else if(nrTemas.containsKey(artistName) && SongsFunctions.songs.containsKey(songKey)){
-            nrTemas.replace(artistName,nrTemas.get(artistName),nrTemas.get(artistName)+1);
+            nrTemas.replace(artistName.trim(),nrTemas.get(artistName),nrTemas.get(artistName)+1);
         }else{
-            nrTemas.put(artistName,1);
+            nrTemas.put(artistName.trim(),1);
         }
     }
     public static void assignThemes(){
+        String artistName="";
         for (String i:SongsFunctions.songs.keySet()){
-            if(nrTemas.containsKey(SongsFunctions.songs.get(i).artista.nome)){
-                SongsFunctions.songs.get(i).artista.nrTemas.put(artistas.get(i).nome,nrTemas.get(artistas.get(i).nome));
+            artistName=SongsFunctions.songs.get(i).artista.nome;
+            String[]artists=artistName.split(",");
+            for(String j:artists){
+                if(nrTemas.containsKey(j)){
+                    SongsFunctions.songs.get(i).artista.nrTemas.put(artistas.get(i).nome,nrTemas.get(j));
+                }
             }
         }
     }
