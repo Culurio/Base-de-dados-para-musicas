@@ -66,13 +66,16 @@ public class Main {
     }
 
     public static String execute(String command) {
-        String[] commands;
+        String[] commands=null;
         String[] FirstCommand = command.split(" ");
         command = command.replace(FirstCommand[0], "");
         if (FirstCommand.length != 1) {
             command = command.replace(" " + FirstCommand[1], FirstCommand[1]);
         }
-        switch (FirstCommand[0]) {
+        return execute2(command,commands,FirstCommand[0]);
+    }
+    public static String execute2(String command,String[] commands,String FirstCommand){
+        switch (FirstCommand) {
             case "COUNT_SONGS_YEAR":
                 commands = command.split(" ");
                 return CommandsFunctions.countSongYears(commands[0]);
@@ -95,7 +98,10 @@ public class Main {
             case "GET_UNIQUE_TAGS_IN_BETWEEN_YEARS":
                 commands = command.split(" ");
                 return CommandsFunctions.getUniqueTagsInBetweenYears(commands[0], commands[1]);
-            //case "GET_TOP_ARTISTS_WITH_SONGS_BETWEEN":commands=command.split(" ");return CommandsFunctions.getTopArtistWithSongsBetween(commands[0],commands[1],commands[2]);
+            case  "GET_ARTISTS_ONE_SONG":
+                commands = command.split(" ");
+                return CommandsFunctions.getArtistsOneSong(commands[0], commands[1]);
+            case "GET_TOP_ARTISTS_WITH_SONGS_BETWEEN":commands=command.split(" ");return CommandsFunctions.getTopArtistWithSongsBetween(commands[0],commands[1],commands[2]);
             case "CLEANUP":
                 return CleanupFunctions.cleanup();
             default:
@@ -103,5 +109,3 @@ public class Main {
         }
     }
 }
-//GET_UNIQUE_TAGS_IN_BETWEEN_YEARS 1920 1922
-//ADD_TAGS Mamie Smith;KONA

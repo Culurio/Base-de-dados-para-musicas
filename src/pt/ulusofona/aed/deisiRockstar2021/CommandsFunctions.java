@@ -141,11 +141,13 @@ public class CommandsFunctions {
         TreeMap<String, Song> names = new TreeMap<>();
         StringBuilder result = new StringBuilder();
         for (String i : SongsFunctions.songs.keySet()) {
-            if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
-                if (!names.containsKey(SongsFunctions.songs.get(i).artista.nome)) {
-                    names.put(SongsFunctions.songs.get(i).artista.nome, SongsFunctions.songs.get(i));
-                } else {
-                    names.remove(SongsFunctions.songs.get(i).artista.nome);
+            if (SongsFunctions.songs.get(i).artista != null && SongsFunctions.songs.get(i).detalhes != null) {
+                if (SongsFunctions.songs.get(i).anoLancamento >= year1Int && SongsFunctions.songs.get(i).anoLancamento <= year2Int) {
+                    if (!names.containsKey(SongsFunctions.songs.get(i).artista.nome)) {
+                        names.put(SongsFunctions.songs.get(i).artista.nome, SongsFunctions.songs.get(i));
+                    } else {
+                        names.remove(SongsFunctions.songs.get(i).artista.nome);
+                    }
                 }
             }
         }
@@ -205,13 +207,13 @@ public class CommandsFunctions {
         return tags;
     }
 
-    /*public static String getTopArtistWithSongsBetween(String nrDeArtistas,String minimoString, String maximoString){
+    public static String getTopArtistWithSongsBetween(String nrDeArtistas,String minimoString, String maximoString){
         LinkedHashMap<String, Integer> numeroDeMusicas = new LinkedHashMap<>();
         StringBuilder resultado = new StringBuilder();
         int minimo = Integer.parseInt(minimoString), maximo = Integer.parseInt(maximoString);
 
         for (String s : SongsFunctions.songs.keySet()){
-            if (SongsFunctions.songs.get(s).artista.nrTemas.get(s) >= minimo && SongsFunctions.songs.get(s).artista.nrTemas.get(s) <= maximo){
+            if (betweenYear(s,minimo,maximo)){
                 if (SongsFunctions.songs.get(s).artista.nrTemas.size() != 0){
                     for (String i : SongsFunctions.songs.get(s).artista.nrTemas.keySet()){
                         if (numeroDeMusicas.containsKey(i)){
@@ -224,10 +226,20 @@ public class CommandsFunctions {
             }
         }
 
-        numeroDeMusicas = SortHashMap.SortInt(numeroDeMusicas);
+        numeroDeMusicas = SortHashMap.sortInt(numeroDeMusicas);
         for (String f : numeroDeMusicas.keySet()){
             resultado.append(f).append(" ").append(numeroDeMusicas.get(f)).append("\n");
         }
         return resultado.toString();
-    }*/
+    }
+
+    public static Boolean betweenYear(String key,int minimo,int maximo){
+        if(SongsFunctions.songs.get(key).artista != null && SongsFunctions.songs.get(key).detalhes != null ){
+            if(ArtistsFunctions.artistas.get(key).nrTemas.get(SongsFunctions.songs.get(key).artista.nome) >= minimo
+                    && ArtistsFunctions.artistas.get(key).nrTemas.get(SongsFunctions.songs.get(key).artista.nome) <= maximo){
+                return true;
+            }
+        }
+        return false;
+    }
 }
